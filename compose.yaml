@@ -24,13 +24,14 @@ services:
       - mongodb
 
   data-import:
-    build: ./data-import
+    build: ./data_import
     container_name: data-import
     depends_on:
       - mongodb
     volumes:
       - ./data:/app/data
       - ./.env:/app/.env
+
 
 volumes:
   mongodb_data:
