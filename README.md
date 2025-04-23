@@ -20,6 +20,7 @@ Dans le cadre d’une mission, nous devons migrer un dataset de patients vers **
 
 ## 📂 Structure du projet
 
+```text
 MongoSafeCloud/
 ├── data/
 │   └── dataset.csv
@@ -35,7 +36,7 @@ MongoSafeCloud/
 ├── Dockerfile
 ├── Lien.txt
 └── README.md
-
+```
 ---
 
 ## 🚀 Installation et Exécution
