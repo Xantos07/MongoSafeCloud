@@ -34,7 +34,6 @@ MongoSafeCloud/
 ├── .gitignore
 ├── compose.yaml
 ├── Dockerfile
-├── Lien.txt
 └── README.md
 ```
 ---
