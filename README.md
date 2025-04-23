@@ -20,7 +20,21 @@ Dans le cadre d’une mission, nous devons migrer un dataset de patients vers **
 
 ## 📂 Structure du projet
 
-En cours ...
+MongoSafeCloud/
+├── data/
+│   └── dataset.csv
+├── data_import/
+│   ├── tests/
+│   │   └── test_import_csv.py
+│   ├── Dockerfile
+│   ├── import_csv.py
+│   └── requirements.txt
+├── .env
+├── .gitignore
+├── compose.yaml
+├── Dockerfile
+├── Lien.txt
+└── README.md
 
 ---
 
@@ -28,14 +42,13 @@ En cours ...
 
 ### 1️⃣ Prérequis
 - **Docker & Docker Compose** installés
-- **MongoDB**
 
 
 ### 2️⃣ Installation
 Cloner le dépôt :
 ```bash
-git clone https://github.com/Xantos07/SecureDataStorageSystem.git
-cd SecureDataStorageSystem
+git clone https://github.com/Xantos07/MongoSafeCloud.git
+cd MongoSafeCloud
 ```
 Lancer MongoDB et les scripts de migration via Docker Compose :
 ```bash
@@ -44,16 +57,7 @@ docker-compose up -d
 
 ---
 
-## 🛠 Détails Techniques
-En cours ...
 
----
-
-## 🌩️ AWS
-
-En cours ...
-
----
 
 ## 📢 Présentation finale
 
