@@ -1,22 +1,11 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 import pandas as pd
 from datetime import datetime
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from mongo_utils import connect_to_mongo
 
-# Pour forcer le flush immédiat des print() dans Docker
-sys.stdout.reconfigure(line_buffering=True)
-
-def connect_to_mongo():
-    load_dotenv()
-    username = os.getenv("MONGO_INITDB_ROOT_USERNAME")
-    password = os.getenv("MONGO_INITDB_ROOT_PASSWORD")
-    uri = f"mongodb://{username}:{password}@mongodb:27017/?authSource=admin"
-    return MongoClient(uri)
 
 def load_data():
     """
@@ -125,6 +114,7 @@ def insert_into_mongo(patients, hospitals, doctors, admissions):
         db.admissions.insert_many(admissions)
     print("✅ Import terminé !")
 
+
 def main():
     print("▶️  Démarrage de l'import normalisé…")
 
@@ -148,6 +138,8 @@ def main():
 
     # 5. Insertion en base
     insert_into_mongo(patients, hospitals, doctors, admissions)
+
+
 
 if __name__ == "__main__":
     main()
