@@ -50,12 +50,21 @@ Cloner le dépôt :
 git clone https://github.com/Xantos07/MongoSafeCloud.git
 cd MongoSafeCloud
 ```
-Lancer MongoDB et les scripts de migration via Docker Compose :
+Initialisation pour un build:
+```bash
+docker-compose build --no-cache
+```
+
+Lancement du build:
 ```bash
 docker-compose up -d
 ```
 
+
+
+
 ---
+![Schéma de la base de données](assets/schema.png)
 
 
 
