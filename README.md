@@ -63,7 +63,7 @@ cd MongoSafeCloud
 
 Initialisation pour un build:
 ```bash
-docker-compose build --no-cache
+docker-compose build 
 ```
 
 Lancement du build:
@@ -73,7 +73,7 @@ docker-compose up -d
 
 ---
 
-Schéma de la B=base de donnée : 
+Schéma de la base de donnée : 
 
 ![Schéma de la base de données](images/schema_db.png)
 
@@ -81,11 +81,6 @@ Schéma Docker  :
 
 ![Schéma de la base de données](images/schema_docker.png)
 
-## 📢 Présentation finale
-
-- **Le contexte de la mission**
-- **La démarche technique**
-- **Les choix technologiques et leur justification**
 
 ---
 
@@ -99,19 +94,109 @@ Schéma Docker  :
 | **Python 3 + pandas**| Traitement et nettoyage du CSV, scripting simple pour l’import automatique.            |
 | **Git**              | Versioning, revue de code et collaboration facilitées.                                 |
 
-
 ---
 
-## 🔒 Authentification & Rôles Utilisateurs
+## Environnement 
 
-Pour sécuriser l’accès à la base, on distingue deux rôles :
+### Variables d’environnement à configurer
 
-- **admin**  
-- **user**  
-Sécurité des mots de passe : les identifiants sont hachés avec bcrypt avant stockage, 
-garantissant ainsi la confidentialité et la résistance aux attaques par force brute.
-Les identifiants et mots de passe sont définis via les variables d’environnement dans .env, 
-et chaque service (Import & mongo-express) utilise ces rôles pour se connecter de manière sécurisée.
+ - Pour la base de données MongoDB
 
-Donnée de test sur : 
+```text
+MONGO_INITDB_ROOT_USERNAME=VotreUserRoot
+MONGO_INITDB_ROOT_PASSWORD=VotreMdpRoot
+```
+
+- Pour l’accès à mongo-express
+
+```text
+ME_CONFIG_BASICAUTH_USERNAME=VotreUSER
+ME_CONFIG_BASICAUTH_PASSWORD=VotreMDP
+```
+
+⚠️ Attention :
+mongo-express ne supporte qu’une seule connexion utilisateur à la fois (pas de multi-utilisateur).
+
+## 🔒 Authentification & Gestion des Rôles
+
+Pour garantir la sécurité de la base de données, trois rôles principaux sont mis en place :
+
+| Rôle         | Description                                                         |
+|--------------|---------------------------------------------------------------------|
+| **admin**    | Accès complet à toutes les fonctionnalités et données               |
+| **readWrite**| Lire, écrire, créer/supprimer des collections et des indexes        |
+| **read**     | Accès en lecture seule                                              |
+
+Les mots de passe et identifiants sont sécurisés conformément à la documentation MongoDB :  
+=> [Gestion des utilisateurs MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.createUser/)
+
+### Création et gestion des utilisateurs
+
+1. **Se connecter au conteneur MongoDB**
+
+Se connecter au container en question : 
+
+
+```bash
+docker exec -it mongodb bash
+```
+
+2. **Se connecter en tant qu’administrateur**
+
+(Les identifiants sont dans le fichier .env)
+
+```bash
+mongosh -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin
+```
+
+3. **Créer un nouvelle utilisateur**
+
+```bash
+use health_db
+```
+```bash
+db.createUser({
+user: "userReadWrite",
+pwd: "votreMDP",
+roles: [ { role: "readWrite", db: "health_db" } ]
+})
+```
+```bash
+db.createUser({
+user: "userRead",
+pwd: "votreMDP",
+roles: [ { role: "read", db: "health_db" } ]
+})
+```
+
+
+4. **Connexion avec un utilisateur spécifique**
+
+
+```bash
+mongosh "mongodb://userReadWrite:votreMDP@localhost:27017/health_db"
+```
+
+ou
+
+```bash
+mongosh "mongodb://userRead:votreMDP@localhost:27017/health_db"
+```
+
+**Remarques :**
+
+Les utilisateurs sont créés dans la base admin mais affectés à la base cible (health_db).
+
+mongo-express ne permet la connexion qu’avec un seul utilisateur à la fois. 
+
+
+## 📢 Présentation finale
+
+- **Le contexte de la mission**
+- **La démarche technique**
+- **Les choix technologiques et leur justification**
+
+Jeu de données d’exemple :
 https://www.kaggle.com/datasets/prasad22/healthcare-dataset/data?select=healthcare_dataset.csv
+
+
