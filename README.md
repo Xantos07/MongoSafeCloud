@@ -20,13 +20,12 @@ Dans le cadre d’une mission, nous devons migrer un dataset de patients vers **
 
 ## 📂 Structure du projet
 
+Local :
 ```text
 MongoSafeCloud/
 ├── data/
 │   └── dataset.csv
 ├── data_import/
-│   ├── tests/
-│   │   └── test_import_csv.py
 │   ├── Dockerfile
 │   ├── import_csv.py
 │   └── requirements.txt
@@ -36,6 +35,17 @@ MongoSafeCloud/
 ├── Dockerfile
 └── README.md
 ```
+Build sous docker :
+```text
+MongoSafeCloud/
+/app
+├── requirements.txt         
+├── import_csv.py            
+├── data/                    
+│   └── dataset.csv
+└── .env                    
+```
+
 ---
 
 ## 🚀 Installation et Exécution
@@ -50,6 +60,7 @@ Cloner le dépôt :
 git clone https://github.com/Xantos07/MongoSafeCloud.git
 cd MongoSafeCloud
 ```
+
 Initialisation pour un build:
 ```bash
 docker-compose build --no-cache
@@ -60,13 +71,15 @@ Lancement du build:
 docker-compose up -d
 ```
 
-
-
-
 ---
-![Schéma de la base de données](assets/schema.png)
 
+Schéma de la B=base de donnée : 
 
+![Schéma de la base de données](images/schema_db.png)
+
+Schéma Docker  : 
+
+![Schéma de la base de données](images/schema_docker.png)
 
 ## 📢 Présentation finale
 
