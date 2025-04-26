@@ -89,5 +89,29 @@ Schéma Docker  :
 
 ---
 
+## 🛠️ Technologies & Justification
+
+| Technologie          | Raison du choix                                                                        |
+|----------------------|----------------------------------------------------------------------------------------|
+| **Docker / Compose** | Isolation des services et portabilité ; déploiement rapide et reproductible.           |
+| **MongoDB**          | Base NoSQL scalable, schéma flexible pour des données médicales.                       |
+| **mongo-express**    | Interface web légère pour administrer la base sans installer de client externe.        |
+| **Python 3 + pandas**| Traitement et nettoyage du CSV, scripting simple pour l’import automatique.            |
+| **Git**              | Versioning, revue de code et collaboration facilitées.                                 |
+
+
+---
+
+## 🔒 Authentification & Rôles Utilisateurs
+
+Pour sécuriser l’accès à la base, on distingue deux rôles :
+
+- **admin**  
+- **user**  
+Sécurité des mots de passe : les identifiants sont hachés avec bcrypt avant stockage, 
+garantissant ainsi la confidentialité et la résistance aux attaques par force brute.
+Les identifiants et mots de passe sont définis via les variables d’environnement dans .env, 
+et chaque service (Import & mongo-express) utilise ces rôles pour se connecter de manière sécurisée.
+
 Donnée de test sur : 
 https://www.kaggle.com/datasets/prasad22/healthcare-dataset/data?select=healthcare_dataset.csv
