@@ -2,3 +2,4 @@ pytest
 pandas
 pymongo
 python-dotenv
+bcrypt
